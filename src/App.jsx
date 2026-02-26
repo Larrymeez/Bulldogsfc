@@ -4,10 +4,8 @@ import badge from "./assets/Bulldog.png";
 import infoImage from "./assets/helo2.jpg";
 import hero2 from "./assets/helo2.jpg";
 import hero3 from "./assets/helo3.jpg";
-import hero4 from "./assets/helo4.jpg";
-import hero5 from "./assets/helo5.jpg";
 import hero6 from "./assets/helo6.jpg";
-import hero7 from "./assets/helo7.jpg";
+
 
 export default function App() {
   const players = Array.from({ length: 20 }, (_, i) => ({
@@ -50,7 +48,7 @@ export default function App() {
       .forEach((el) => observer.observe(el));
   }, []);
 
-  const slides = [heroImage, hero2, hero3, hero4, hero5, hero6, hero7];
+  const slides = [heroImage, hero2, hero3, hero6,];
 const [currentSlide, setCurrentSlide] = useState(0);
 
 useEffect(() => {
@@ -59,6 +57,30 @@ useEffect(() => {
   }, 5000); // change every 5 seconds
 
   return () => clearInterval(interval);
+}, []);
+
+// ================= NEXT MATCH COUNTDOWN =================
+const matchDate = new Date("2026-03-01T15:00:00"); 
+
+const [timeLeft, setTimeLeft] = useState(getTimeRemaining());
+
+function getTimeRemaining() {
+  const total = matchDate - new Date();
+
+  const seconds = Math.floor((total / 1000) % 60);
+  const minutes = Math.floor((total / 1000 / 60) % 60);
+  const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(total / (1000 * 60 * 60 * 24));
+
+  return { total, days, hours, minutes, seconds };
+}
+
+useEffect(() => {
+  const timer = setInterval(() => {
+    setTimeLeft(getTimeRemaining());
+  }, 1000);
+
+  return () => clearInterval(timer);
 }, []);
 
   return (
@@ -136,7 +158,7 @@ useEffect(() => {
   <img
     src={badge}
     alt=""
-    className="absolute w-[650px] opacity-10 pointer-events-none select-none"
+    className="absolute w-[650px] opacity-20 pointer-events-none select-none"
   />
 
   {/* BUTTON HUB */}
@@ -174,6 +196,64 @@ useEffect(() => {
           }`}
         />
       ))}
+    </div>
+
+  </div>
+
+</section>
+
+{/* ================= NEXT MATCH SECTION ================= */}
+<section className="bg-zinc-950 py-24 px-6 border-t border-zinc-800 text-center">
+
+  <div className="max-w-6xl mx-auto">
+
+    <h2 className="text-5xl font-display uppercase tracking-widest mb-4">
+      Next <span className="text-clubRed">Match</span>
+    </h2>
+
+    <div className="h-1 w-24 bg-clubRed mx-auto mb-10"></div>
+
+    {/* MATCH INFO */}
+    <div className="mb-12">
+      <p className="text-2xl md:text-4xl font-display uppercase">
+        44 Bulldogs FC <span className="text-primary">vs</span> Red Berets Fc
+      </p>
+
+      <p className="text-gray-400 mt-3 uppercase tracking-widest text-sm">
+        01 March 2026 • 3:00 PM • Kamiti Prisons Ground
+      </p>
+    </div>
+
+    {/* COUNTDOWN */}
+    {timeLeft.total > 0 ? (
+      <div className="flex justify-center gap-6 flex-wrap">
+
+        {["days", "hours", "minutes", "seconds"].map((unit) => (
+          <div
+            key={unit}
+            className="bg-black border border-zinc-800 px-8 py-6 w-28"
+          >
+            <div className="text-3xl font-display text-clubRed">
+              {timeLeft[unit]}
+            </div>
+            <div className="text-xs uppercase tracking-widest text-gray-400 mt-2">
+              {unit}
+            </div>
+          </div>
+        ))}
+
+      </div>
+    ) : (
+      <p className="text-clubRed text-2xl font-display">
+        Match Day Is Here!
+      </p>
+    )}
+
+    {/* CTA BUTTON */}
+    <div className="mt-12">
+      <button className="bg-clubRed hover:bg-blueHover px-12 py-4 font-display uppercase tracking-wider transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(255,0,0,0.6)]">
+        View Fixtures
+      </button>
     </div>
 
   </div>
@@ -284,7 +364,7 @@ useEffect(() => {
                       🐶
                     </div>
                     <p className="text-xs uppercase tracking-[0.2em] text-clubRed font-bold">
-                      Scouting Now
+                      Coming Soon
                     </p>
                   </div>
                 </div>
