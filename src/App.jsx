@@ -345,6 +345,90 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {/* ================= SOCIAL MEDIA / FAN ENGAGEMENT ================= */}
+<section className="bg-black py-24 px-6 text-center">
+  <div className="max-w-6xl mx-auto">
+    <h2 className="text-4xl md:text-5xl font-display uppercase tracking-widest mb-6">
+      Join Our <span className="text-clubRed">Community</span>
+    </h2>
+    <p className="text-gray-400 mb-10 text-lg md:text-xl">
+      Follow 44 Bulldogs FC on social media and stay updated with the latest news, match highlights, and behind-the-scenes moments.
+    </p>
+
+    <div className="flex justify-center gap-8 flex-wrap">
+      <a href="#" className="text-white hover:text-clubRed text-3xl transition-colors">
+        <i className="fab fa-facebook-f"></i>
+      </a>
+      <a href="#" className="text-white hover:text-clubRed text-3xl transition-colors">
+        <i className="fab fa-twitter"></i>
+      </a>
+      <a href="#" className="text-white hover:text-clubRed text-3xl transition-colors">
+        <i className="fab fa-instagram"></i>
+      </a>
+      <a href="#" className="text-white hover:text-clubRed text-3xl transition-colors">
+        <i className="fab fa-youtube"></i>
+      </a>
+      <a href="#" className="text-white hover:text-clubRed text-3xl transition-colors">
+        <i className="fab fa-tiktok"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+{/* ================= SPONSORS SECTION ================= */}
+<section className="bg-zinc-950 py-20 px-6">
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-4xl md:text-5xl font-display uppercase tracking-widest text-center mb-12">
+      Our <span className="text-clubRed">Sponsors</span>
+    </h2>
+
+    <div className="flex flex-wrap justify-center items-center gap-12">
+      {/* Replace # with actual sponsor logos */}
+      <img src="/assets/sponsor1.png" alt="Sponsor 1" className="h-16 object-contain" />
+      <img src="/assets/sponsor2.png" alt="Sponsor 2" className="h-16 object-contain" />
+      <img src="/assets/sponsor3.png" alt="Sponsor 3" className="h-16 object-contain" />
+      <img src="/assets/sponsor4.png" alt="Sponsor 4" className="h-16 object-contain" />
+      <img src="/assets/sponsor5.png" alt="Sponsor 5" className="h-16 object-contain" />
+    </div>
+  </div>
+</section>
+
+{/* ================= FOOTER ================= */}
+<footer className="bg-black border-t border-zinc-800 py-12 px-6">
+  <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+
+    {/* Club Info */}
+    <div className="text-center md:text-left">
+      <h3 className="text-2xl font-display uppercase tracking-wider mb-2">44 Bulldogs FC</h3>
+      <p className="text-gray-400 text-sm">
+        Kamiti Prisons Ground, Nairobi<br />
+        info@44bulldogsfc.com
+      </p>
+    </div>
+
+    {/* Quick Links */}
+    <div className="flex gap-6 uppercase tracking-widest font-bold text-white">
+      <a href="#">Home</a>
+      <a href="#team-section">Squad</a>
+      <a href="#">Fixtures</a>
+      <a href="#">Contact</a>
+    </div>
+
+    {/* Social Media */}
+    <div className="flex gap-6 text-white text-2xl">
+      <a href="#" className="hover:text-clubRed transition-colors"><i className="fab fa-facebook-f"></i></a>
+      <a href="#" className="hover:text-clubRed transition-colors"><i className="fab fa-twitter"></i></a>
+      <a href="#" className="hover:text-clubRed transition-colors"><i className="fab fa-instagram"></i></a>
+      <a href="#" className="hover:text-clubRed transition-colors"><i className="fab fa-youtube"></i></a>
+    </div>
+
+  </div>
+
+  <div className="mt-8 text-center text-gray-500 text-sm">
+    &copy; 2026 44 Bulldogs FC. All rights reserved.
+  </div>
+</footer>
     </div>
   );
 }
