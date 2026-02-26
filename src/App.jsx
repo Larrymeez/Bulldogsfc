@@ -2,6 +2,12 @@ import { useRef, useEffect, useState } from "react";
 import heroImage from "./assets/helo.jpg";
 import badge from "./assets/Bulldog.png";
 import infoImage from "./assets/helo2.jpg";
+import hero2 from "./assets/helo2.jpg";
+import hero3 from "./assets/helo3.jpg";
+import hero4 from "./assets/helo4.jpg";
+import hero5 from "./assets/helo5.jpg";
+import hero6 from "./assets/helo6.jpg";
+import hero7 from "./assets/helo7.jpg";
 
 export default function App() {
   const players = Array.from({ length: 20 }, (_, i) => ({
@@ -44,61 +50,135 @@ export default function App() {
       .forEach((el) => observer.observe(el));
   }, []);
 
+  const slides = [heroImage, hero2, hero3, hero4, hero5, hero6, hero7];
+const [currentSlide, setCurrentSlide] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }, 5000); // change every 5 seconds
+
+  return () => clearInterval(interval);
+}, []);
+
   return (
     <div className="text-white font-sans selection:bg-clubRed selection:text-white">
 
-      {/* ================= HERO SECTION ================= */}
-      <section
-        className="relative min-h-screen flex items-center justify-center text-center overflow-hidden"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+      {/* ================= NAVBAR ================= */}
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur border-b border-zinc-800">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
 
-        {/* 🔥 TOP-LEFT BADGE */}
-        <img
-          src={badge}
-          alt="Club Badge"
-          className="absolute top-6 left-6 w-20 md:w-28 animate-badgeSwing z-20 drop-shadow-[0_0_20px_rgba(255,0,0,0.6)]"
-        />
+          {/* LEFT — BADGE + CLUB NAME */}
+          <div className="flex items-center gap-3">
+            <img
+              src={badge}
+              alt="44 Bulldogs FC Badge"
+              className="w-12 md:w-14 drop-shadow-[0_0_12px_rgba(255,0,0,0.6)]"
+            />
 
-        {/* HERO CONTENT */}
-        <div className="relative z-10 px-4">
-          <h1 className="text-6xl md:text-9xl font-sans uppercase tracking-tighter leading-none mb-6">
-            44{" "}
-            <span className="text-clubRed italic block md:inline">
-              Bulldogs
-            </span>{" "}
-            FC
-          </h1>
+            <span className="text-xl md:text-2xl font-display uppercase tracking-wider font-extrabold">
+              44 <span className="text-clubRed bolder">Bulldogs</span> FC
+            </span>
+          </div>
 
-          <p className="max-w-xl mx-auto text-gray-300 mb-10 text-lg md:text-xl font-sans uppercase tracking-widest font-light">
-            Strength <span className="text-clubRed px-2">•</span> Unity{" "}
-            <span className="text-clubRed px-2">•</span> Dominance
-          </p>
+          {/* RIGHT — NAV LINKS */}
+          <div className="hidden md:flex items-center gap-8 font-display uppercase tracking-widest text-base font-extrabold">
 
-          <div className="flex gap-4 justify-center flex-wrap">
-            <button className="bg-clubRed hover:bg-blueHover px-10 py-4 rounded-sm font-bold font-display uppercase tracking-wider transition-all transform hover:skew-x-[-10deg] shadow-[5px_5px_0px_rgba(255,255,255,0.3)]">
-              Fixtures
-            </button>
+            <a href="#" className="hover:text-primary transition-colors duration-300">
+              Home
+            </a>
 
-            <button
-              onClick={() =>
-                document
-                  .getElementById("team-section")
-                  .scrollIntoView({ behavior: "smooth" })
-              }
-              className="bg-transparent border-2 border-white hover:bg-blueHover hover:text-white px-10 py-4 rounded-sm font-bold font-display uppercase tracking-wider transition-all transform hover:skew-x-[-10deg]"
+            <a
+              href="#team-section"
+              className="hover:text-primary transition-colors duration-300"
             >
-              Meet The Team
+              Squad
+            </a>
+
+            <a href="#" className="hover:text-primary transition-colors duration-300">
+              Fixtures
+            </a>
+
+            <a href="#" className="hover:text-primary transition-colors duration-300">
+              Contact
+            </a>
+
+            <button className="bg-clubRed hover:bg-blueHover px-5 py-2 rounded-sm font-bold font-display transition-all">
+              Fixtures
             </button>
           </div>
         </div>
-      </section>
+      </nav>
+
+     {/* ================= CINEMATIC HERO SLIDESHOW ================= */}
+<section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+
+  {/* SLIDES */}
+  {slides.map((slide, index) => (
+    <div
+      key={index}
+      className={`absolute inset-0 transition-opacity duration-1000 ${
+        index === currentSlide ? "opacity-100" : "opacity-0"
+      }`}
+    >
+      <img
+        src={slide}
+        alt=""
+        className="w-full h-full object-cover scale-105 animate-slowZoom"
+      />
+    </div>
+  ))}
+
+  {/* Dark cinematic overlay */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20"></div>
+
+  {/* TRANSLUCENT WATERMARK BADGE */}
+  <img
+    src={badge}
+    alt=""
+    className="absolute w-[650px] opacity-10 pointer-events-none select-none"
+  />
+
+  {/* BUTTON HUB */}
+  <div className="relative z-10 flex flex-col items-center gap-10">
+
+    <div className="flex gap-6 flex-wrap justify-center">
+
+      <button className="bg-clubRed hover:bg-blueHover px-12 py-5 rounded-sm font-bold font-display uppercase tracking-wider transition-all transform hover:scale-105 shadow-[0_0_25px_rgba(255,0,0,0.5)]">
+        Fixtures
+      </button>
+
+      <button
+        onClick={() =>
+          document
+            .getElementById("team-section")
+            .scrollIntoView({ behavior: "smooth" })
+        }
+        className="bg-transparent border-2 border-white hover:bg-blueHover hover:text-white px-12 py-5 rounded-sm font-bold font-display uppercase tracking-wider transition-all transform hover:scale-105"
+      >
+        Meet The Team
+      </button>
+
+    </div>
+
+    {/* SLIDE DOTS */}
+    <div className="flex gap-3 mt-6">
+      {slides.map((_, index) => (
+        <div
+          key={index}
+          onClick={() => setCurrentSlide(index)}
+          className={`w-3 h-3 rounded-full cursor-pointer transition-all ${
+            index === currentSlide
+              ? "bg-clubRed scale-125"
+              : "bg-white/40"
+          }`}
+        />
+      ))}
+    </div>
+
+  </div>
+
+</section>
 
       {/* ================= TEAM INFO SECTION ================= */}
       <section className="bg-zinc-950 py-24 px-6 border-t border-zinc-800">
@@ -111,8 +191,6 @@ export default function App() {
               alt="44 Bulldogs FC"
               className="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
             />
-
-            {/* Overlay for depth */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
           </div>
 
@@ -125,7 +203,10 @@ export default function App() {
             <div className="h-1 w-24 bg-clubRed mb-8"></div>
 
             <p className="text-gray-300 text-lg leading-relaxed font-sans mb-10">
-              44 Bulldogs FC is a men's football club founded in 2023, currently competing in the FKF Nairobi East Division 2 league. The club is dedicated to fostering local talent and promoting the sport within the community. With a passionate fanbase and a commitment to excellence, 44 Bulldogs FC aims to climb the ranks of Kenyan football and establish itself as a powerhouse in the national league system.
+              44 Bulldogs FC is a men's football club founded in 2023,
+              currently competing in the FKF Nairobi East Division 2 league.
+              The club is dedicated to fostering local talent and promoting
+              the sport within the community.
             </p>
 
             <div className="space-y-4 text-gray-300 font-sans">
@@ -144,7 +225,6 @@ export default function App() {
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -152,7 +232,6 @@ export default function App() {
       <section id="team-section" className="bg-black py-24 px-6 relative">
         <div className="max-w-7xl mx-auto">
 
-          {/* HEADER */}
           <div className="flex justify-between items-end mb-12">
             <div>
               <h2 className="text-5xl font-display uppercase italic tracking-tighter">
@@ -161,7 +240,6 @@ export default function App() {
               <div className="h-1 w-20 bg-clubRed mt-2"></div>
             </div>
 
-            {/* NAV BUTTONS */}
             <div className="hidden md:flex gap-4">
               <button
                 onClick={() => scroll("left")}
@@ -169,7 +247,6 @@ export default function App() {
               >
                 ←
               </button>
-
               <button
                 onClick={() => scroll("right")}
                 className="border border-gray-700 hover:border-clubRed p-4 transition-colors"
@@ -179,7 +256,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* PLAYER CARDS */}
           <div
             ref={scrollRef}
             className="flex gap-8 overflow-x-auto pb-10 snap-x snap-mandatory scrollbar-hide"
@@ -194,14 +270,12 @@ export default function App() {
                     : "opacity-0"
                 }`}
               >
-                {/* CARD VISUAL */}
                 <div className="relative h-80 bg-gradient-to-b from-zinc-800 to-zinc-900 flex items-center justify-center overflow-hidden">
-
                   <span className="absolute -bottom-4 -right-4 text-9xl font-display text-white/5 italic">
                     {player.number}
                   </span>
 
-                  <span className="absolute top-4 left-4 bg-clubRed text-white text-xl px-3 py-1 font-accent">
+                  <span className="absolute top-4 left-4 bg-primary text-white text-xl px-3 py-1 font-accent">
                     #{player.number}
                   </span>
 
@@ -209,14 +283,12 @@ export default function App() {
                     <div className="text-6xl mb-2 grayscale opacity-40">
                       🐶
                     </div>
-
                     <p className="text-xs uppercase tracking-[0.2em] text-clubRed font-bold">
                       Scouting Now
                     </p>
                   </div>
                 </div>
 
-                {/* PLAYER INFO */}
                 <div className="p-6">
                   <h3 className="text-2xl font-display uppercase italic tracking-tight">
                     {player.name}

@@ -23,20 +23,19 @@ module.exports = {
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
 
-        // ⭐ LEFT → RIGHT → LEFT subtle rotation
-        badgeSwing: {
-          '0%, 100%': { transform: 'rotate(-8deg)' }, // left
-          '50%': { transform: 'rotate(8deg)' },       // right
-        },
+        keyframes: {
+  slowZoom: {
+    '0%': { transform: 'scale(1)' },
+    '100%': { transform: 'scale(1.1)' },
+  },
+},
+animation: {
+  slowZoom: 'slowZoom 6s ease-in-out infinite alternate',
+},
+
+        
       },
 
-      animation: {
-        fadeIn: 'fadeIn 0.6s ease-out forwards',
-        slideFade: 'slideFade 0.7s ease-out forwards',
-
-        // Smooth slow swing (includes pause at ends)
-        badgeSwing: 'badgeSwing 6s ease-in-out infinite',
-      },
 
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
