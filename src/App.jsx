@@ -16,6 +16,7 @@ export default function App() {
   const scrollRef = useRef(null);
   const [visibleCards, setVisibleCards] = useState([]);
   const [fixturesOpen, setFixturesOpen] = useState(false);
+  const fixturesPanelRef = useRef(null);
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -27,6 +28,7 @@ export default function App() {
     }
   };
 
+  // Animate cards on scroll
   useEffect(() => {
     if (!scrollRef.current) return;
 
@@ -55,7 +57,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // ================= NEXT MATCH COUNTDOWN =================
+  // Next match countdown
   const matchDate = new Date("2026-03-01T15:00:00");
   const [timeLeft, setTimeLeft] = useState(getTimeRemaining());
 
@@ -74,6 +76,18 @@ export default function App() {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Close panel on click outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (fixturesPanelRef.current && !fixturesPanelRef.current.contains(event.target)) {
+        setFixturesOpen(false);
+      }
+    };
+    if (fixturesOpen) document.addEventListener("mousedown", handleClickOutside);
+    else document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [fixturesOpen]);
 
   const upcomingFixtures = [
     { opponent: "Red Berets FC", date: "01 Mar 2026", time: "3:00 PM" },
@@ -187,7 +201,6 @@ export default function App() {
             <p className="text-clubRed text-2xl font-display">Match Day Is Here!</p>
           )}
 
-          {/* CTA BUTTON */}
           <div className="mt-12">
             <button
               onClick={() => setFixturesOpen(!fixturesOpen)}
@@ -197,8 +210,9 @@ export default function App() {
             </button>
           </div>
 
-          {/* SLIDING FIXTURES PANEL */}
+          {/* ================= SLIDING FIXTURES PANEL ================= */}
           <div
+            ref={fixturesPanelRef}
             className={`absolute top-0 right-0 h-full w-96 bg-zinc-900 shadow-lg transform transition-transform duration-500 ${
               fixturesOpen ? "translate-x-0" : "translate-x-full"
             }`}
@@ -208,7 +222,10 @@ export default function App() {
                 Upcoming Fixtures
               </h3>
               {upcomingFixtures.map((fixture, i) => (
-                <div key={i} className="border-b border-zinc-700 pb-4">
+                <div
+                  key={i}
+                  className="border-b border-zinc-700 pb-4 transition-transform transform hover:scale-105 hover:shadow-lg"
+                >
                   <p className="text-lg font-bold">{fixture.opponent}</p>
                   <p className="text-gray-400 text-sm">{fixture.date} • {fixture.time}</p>
                 </div>
@@ -260,6 +277,30 @@ export default function App() {
       {/* ================= TEAM SECTION ================= */}
       <section id="team-section" className="bg-black py-24 px-6 relative">
         <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <h2 className="text-5xl font-display uppercase italic tracking-tighter">
+                Meet The <span className="text-clubRed">Squad</span>
+              </h2>
+              <div className="h-1 w-20 bg-clubRed mt-2"></div>
+            </div>
+
+            <div className="hidden md:flex gap-4">
+              <button
+                onClick={() => scroll("left")}
+                className="border border-gray-700 hover:border-clubRed p-4 transition-colors"
+              >
+                ←
+              </button>
+              <button
+                onClick={() => scroll("right")}
+                className="border border-gray-700 hover:border-clubRed p-4 transition-colors"
+              >
+                →
+              </button>
+            </div>
+          </div>
+
           <div
             ref={scrollRef}
             className="flex gap-8 overflow-x-auto pb-10 snap-x snap-mandatory scrollbar-hide"
