@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import heroImage from "./assets/helo.jpg";
 import badge from "./assets/Bulldog.png";
+import infoImage from "./assets/helo2.jpg";
 
 export default function App() {
   const players = Array.from({ length: 20 }, (_, i) => ({
@@ -67,7 +68,7 @@ export default function App() {
 
         {/* HERO CONTENT */}
         <div className="relative z-10 px-4">
-          <h1 className="text-6xl md:text-9xl font-serif uppercase tracking-tighter leading-none mb-6">
+          <h1 className="text-6xl md:text-9xl font-sans uppercase tracking-tighter leading-none mb-6">
             44{" "}
             <span className="text-clubRed italic block md:inline">
               Bulldogs
@@ -100,66 +101,58 @@ export default function App() {
       </section>
 
       {/* ================= TEAM INFO SECTION ================= */}
-<section className="bg-zinc-950 py-24 px-6 border-t border-zinc-800">
-  <div className="max-w-6xl mx-auto text-center">
+      <section className="bg-zinc-950 py-24 px-6 border-t border-zinc-800">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
 
-    {/* Section Title */}
-    <h2 className="text-5xl font-display uppercase italic tracking-tighter mb-6">
-      About <span className="text-clubRed">44 Bulldogs FC</span>
-    </h2>
+          {/* IMAGE SIDE */}
+          <div className="relative overflow-hidden group">
+            <img
+              src={infoImage}
+              alt="44 Bulldogs FC"
+              className="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+            />
 
-    <div className="h-1 w-24 bg-clubRed mx-auto mb-12"></div>
+            {/* Overlay for depth */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          </div>
 
-    {/* Description */}
-    <p className="max-w-3xl mx-auto text-gray-300 text-lg leading-relaxed font-sans mb-16">
-      44 Bulldogs FC is built on strength, unity, and relentless determination.
-      We are more than a football club — we are a family driven by passion,
-      discipline, and the hunger to dominate every pitch we step on.
-      Our identity reflects resilience, teamwork, and the bulldog spirit
-      that never backs down.
-    </p>
+          {/* TEXT SIDE */}
+          <div>
+            <h2 className="text-5xl font-display uppercase italic tracking-tighter mb-6">
+              About <span className="text-clubRed">44 Bulldogs FC</span>
+            </h2>
 
-    {/* Info Cards */}
-    <div className="grid md:grid-cols-3 gap-8 text-left">
+            <div className="h-1 w-24 bg-clubRed mb-8"></div>
 
-      {/* Founded */}
-      <div className="bg-black border border-zinc-800 p-8 hover:border-clubRed transition">
-        <h3 className="text-xl font-display uppercase mb-2 text-clubRed">
-          Founded
-        </h3>
-        <p className="text-gray-300 font-sans">
-          2024
-        </p>
-      </div>
+            <p className="text-gray-300 text-lg leading-relaxed font-sans mb-10">
+              44 Bulldogs FC is a men's football club founded in 2023, currently competing in the FKF Nairobi East Division 2 league. The club is dedicated to fostering local talent and promoting the sport within the community. With a passionate fanbase and a commitment to excellence, 44 Bulldogs FC aims to climb the ranks of Kenyan football and establish itself as a powerhouse in the national league system.
+            </p>
 
-      {/* Home Ground */}
-      <div className="bg-black border border-zinc-800 p-8 hover:border-clubRed transition">
-        <h3 className="text-xl font-display uppercase mb-2 text-clubRed">
-          Home Ground
-        </h3>
-        <p className="text-gray-300 font-sans">
-          Bulldogs Arena
-        </p>
-      </div>
+            <div className="space-y-4 text-gray-300 font-sans">
+              <div>
+                <span className="text-primary font-bold uppercase tracking-widest">
+                  Founded:
+                </span>{" "}
+                2023
+              </div>
 
-      {/* Motto */}
-      <div className="bg-black border border-zinc-800 p-8 hover:border-clubRed transition">
-        <h3 className="text-xl font-display uppercase mb-2 text-clubRed">
-          Motto
-        </h3>
-        <p className="text-gray-300 font-sans italic">
-          “Strength • Unity • Dominance”
-        </p>
-      </div>
+              <div>
+                <span className="text-primary font-bold uppercase tracking-widest">
+                  Home Ground:
+                </span>{" "}
+                Kamiti Prisons Ground, Nairobi
+              </div>
+            </div>
+          </div>
 
-    </div>
-  </div>
-</section>
+        </div>
+      </section>
 
       {/* ================= TEAM SECTION ================= */}
       <section id="team-section" className="bg-black py-24 px-6 relative">
         <div className="max-w-7xl mx-auto">
 
+          {/* HEADER */}
           <div className="flex justify-between items-end mb-12">
             <div>
               <h2 className="text-5xl font-display uppercase italic tracking-tighter">
@@ -168,6 +161,7 @@ export default function App() {
               <div className="h-1 w-20 bg-clubRed mt-2"></div>
             </div>
 
+            {/* NAV BUTTONS */}
             <div className="hidden md:flex gap-4">
               <button
                 onClick={() => scroll("left")}
@@ -175,6 +169,7 @@ export default function App() {
               >
                 ←
               </button>
+
               <button
                 onClick={() => scroll("right")}
                 className="border border-gray-700 hover:border-clubRed p-4 transition-colors"
@@ -199,7 +194,9 @@ export default function App() {
                     : "opacity-0"
                 }`}
               >
+                {/* CARD VISUAL */}
                 <div className="relative h-80 bg-gradient-to-b from-zinc-800 to-zinc-900 flex items-center justify-center overflow-hidden">
+
                   <span className="absolute -bottom-4 -right-4 text-9xl font-display text-white/5 italic">
                     {player.number}
                   </span>
@@ -212,12 +209,14 @@ export default function App() {
                     <div className="text-6xl mb-2 grayscale opacity-40">
                       🐶
                     </div>
+
                     <p className="text-xs uppercase tracking-[0.2em] text-clubRed font-bold">
                       Scouting Now
                     </p>
                   </div>
                 </div>
 
+                {/* PLAYER INFO */}
                 <div className="p-6">
                   <h3 className="text-2xl font-display uppercase italic tracking-tight">
                     {player.name}
@@ -233,6 +232,7 @@ export default function App() {
 
         </div>
       </section>
+
     </div>
   );
 }
