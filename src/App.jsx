@@ -112,7 +112,10 @@ export default function App() {
             <a href="#team-section" className="hover:text-primary transition-colors duration-300">Squad</a>
             <a href="#" className="hover:text-primary transition-colors duration-300">Fixtures</a>
             <a href="#" className="hover:text-primary transition-colors duration-300">Contact</a>
-            <button className="bg-clubRed hover:bg-blueHover px-5 py-2 rounded-sm font-bold font-display transition-all">
+            <button 
+            
+            onClick={() => document.getElementById("next-match-section").scrollIntoView({behavior: "smooth"})}
+            className="bg-clubRed hover:bg-blueHover px-5 py-2 rounded-sm font-bold font-display transition-all">
               Fixtures
             </button>
           </div>
@@ -135,9 +138,14 @@ export default function App() {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20"></div>
         <img src={badge} alt="" className="absolute w-[650px] opacity-20 pointer-events-none select-none" />
 
-        <div className="relative z-10 flex flex-col items-center gap-10">
+        <div className="items-center gap-4 z-10 flex flex-col absolute bottom-10 left-1/2 -translate-x-1/2">
           <div className="flex gap-6 flex-wrap justify-center">
-            <button className="bg-clubRed hover:bg-blueHover px-12 py-5 rounded-sm font-bold font-display uppercase tracking-wider transition-all transform hover:scale-105 shadow-[0_0_25px_rgba(255,0,0,0.5)]">
+            <button 
+            onClick={() =>
+              document.getElementById("next-match-section").scrollIntoView({behavior: "smooth"})
+
+            }
+            className="bg-clubRed hover:bg-blueHover px-12 py-5 rounded-sm font-bold font-display uppercase tracking-wider transition-all transform hover:scale-105 shadow-[0_0_25px_rgba(255,0,0,0.5)]">
               Fixtures
             </button>
 
@@ -167,7 +175,7 @@ export default function App() {
 
       {/* ================= NEXT MATCH SECTION ================= */}
 
-<section className="bg-zinc-950 py-24 px-6">
+<section id="next-match-section" className="bg-zinc-950 py-24 px-6">
   <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-start">
     
     {/* LEFT SIDE – MATCH INFO */}
