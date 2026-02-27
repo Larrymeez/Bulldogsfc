@@ -15,9 +15,33 @@ export default function App() {
 
   const scrollRef = useRef(null);
   const [visibleCards, setVisibleCards] = useState([]);
-  const [fixturesOpen, setFixturesOpen] = useState(false);
-  const fixturesPanelRef = useRef(null);
+  const [showFixtures, setShowFixtures] = useState(false); 
+  
+  /*================= COUNTDOWN TIMER ================= */
+  const [timeLeft, setTimeLeft] = useState({})
+  const nextMatchDate = new Date("March 1, 2026 13:00:00").getTime();
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const difference = nextMatchDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      } else {
+        setTimeLeft({});
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [nextMatchDate]);
+
+  /*================= HORIZONTAL SCROLL & CARD ANIMATIONS ================= */
   const scroll = (direction) => {
     if (scrollRef.current) {
       const { clientWidth } = scrollRef.current;
@@ -47,6 +71,7 @@ export default function App() {
     document.querySelectorAll(".player-card").forEach((el) => observer.observe(el));
   }, []);
 
+  /*================= HERO SLIDESHOW ================= */
   const slides = [heroImage, hero2, hero3, hero6];
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -56,45 +81,14 @@ export default function App() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
-
-  // Next match countdown
-  const matchDate = new Date("2026-03-01T15:00:00");
-  const [timeLeft, setTimeLeft] = useState(getTimeRemaining());
-
-  function getTimeRemaining() {
-    const total = matchDate - new Date();
-    const seconds = Math.floor((total / 1000) % 60);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
-    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
-    const days = Math.floor(total / (1000 * 60 * 60 * 24));
-    return { total, days, hours, minutes, seconds };
-  }
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(getTimeRemaining());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  // Close panel on click outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (fixturesPanelRef.current && !fixturesPanelRef.current.contains(event.target)) {
-        setFixturesOpen(false);
-      }
-    };
-    if (fixturesOpen) document.addEventListener("mousedown", handleClickOutside);
-    else document.removeEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [fixturesOpen]);
-
+  
+ 
   const upcomingFixtures = [
-    { opponent: "Red Berets FC", date: "01 Mar 2026", time: "3:00 PM" },
-    { opponent: "Blue Stars FC", date: "05 Mar 2026", time: "4:00 PM" },
-    { opponent: "Green Hawks FC", date: "10 Mar 2026", time: "2:00 PM" },
-    { opponent: "White Wolves FC", date: "15 Mar 2026", time: "5:00 PM" },
-    { opponent: "Yellow Tigers FC", date: "20 Mar 2026", time: "3:30 PM" },
+    { opponent: "Red Berets FC", date: "01 Mar 2026", time: "1:00 PM" },
+    { opponent: "Gatuanyaga FC", date: "05 Mar 2026", time: "3:00 PM" },
+    { opponent: "Butterfly FC", date: "10 Mar 2026", time: "3:00 PM" },
+    { opponent: "TBC", date: "15 Mar 2026", time: "3:00 PM" },
+    { opponent: "TBC", date: "20 Mar 2026", time: "3:00 PM" },
   ];
 
   return (
@@ -172,68 +166,98 @@ export default function App() {
       </section>
 
       {/* ================= NEXT MATCH SECTION ================= */}
-      <section className="bg-zinc-950 py-24 px-6 border-t border-zinc-800 text-center relative">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl font-display uppercase tracking-widest mb-4">
-            Next <span className="text-clubRed">Match</span>
-          </h2>
-          <div className="h-1 w-24 bg-clubRed mx-auto mb-10"></div>
 
-          <div className="mb-12">
-            <p className="text-2xl md:text-4xl font-display uppercase">
-              44 Bulldogs FC <span className="text-primary">vs</span> Red Berets Fc
-            </p>
-            <p className="text-gray-400 mt-3 uppercase tracking-widest text-sm">
-              01 March 2026 • 3:00 PM • Kamiti Prisons Ground
-            </p>
-          </div>
+<section className="bg-zinc-950 py-24 px-6">
+  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+    
+    {/* LEFT SIDE – MATCH INFO */}
+    <div className="relative">
+      <h2 className="text-4xl md:text-5xl font-display uppercase tracking-widest mb-8">
+        Next <span className="text-clubRed">Match</span>
+      </h2>
 
-          {timeLeft.total > 0 ? (
-            <div className="flex justify-center gap-6 flex-wrap">
-              {["days", "hours", "minutes", "seconds"].map((unit) => (
-                <div key={unit} className="bg-black border border-zinc-800 px-8 py-6 w-28">
-                  <div className="text-3xl font-display text-clubRed">{timeLeft[unit]}</div>
-                  <div className="text-xs uppercase tracking-widest text-gray-400 mt-2">{unit}</div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-clubRed text-2xl font-display">Match Day Is Here!</p>
-          )}
+      <div className="bg-black/60 backdrop-blur-md p-8 rounded-2xl border border-zinc-800 shadow-xl">
+        <h3 className="text-2xl font-bold mb-4">
+          44 Bulldogs FC vs Red Berets FC
+        </h3>
+        <p className="text-gray-400 mb-2">📍 Kamiti Grounds</p>
+        <p className="text-gray-400 mb-6">🗓 Sunday, 1:00 PM</p>
 
-          <div className="mt-12">
-            <button
-              onClick={() => setFixturesOpen(!fixturesOpen)}
-              className="bg-clubRed hover:bg-blueHover px-12 py-4 font-display uppercase tracking-wider transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(255,0,0,0.6)]"
+        <button
+          onClick={() => setShowFixtures(!showFixtures)}
+          className="bg-clubRed px-6 py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-blue-600 transition-all duration-300"
+        >
+          View Fixtures
+        </button>
+      </div>
+
+      {/* Countdown Timer */}
+      {timeLeft && Object.keys(timeLeft).length > 0 ? (
+        <div className="mt-8 grid grid-cols-4 gap-4 max-w-md">
+          {[
+            { label: "Days", value: timeLeft.days },
+            { label: "Hours", value: timeLeft.hours },
+            { label: "Minutes", value: timeLeft.minutes },
+            { label: "Seconds", value: timeLeft.seconds },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="bg-black/60 backdrop-blur-md border border-zinc-800 rounded-xl p-4 text-center shadow-lg hover:scale-105 transition-transform duration-300"
             >
-              View Fixtures
-            </button>
-          </div>
-
-          {/* ================= SLIDING FIXTURES PANEL ================= */}
-          <div
-            ref={fixturesPanelRef}
-            className={`absolute top-0 right-0 h-full w-96 bg-zinc-900 shadow-lg transform transition-transform duration-500 ${
-              fixturesOpen ? "translate-x-0" : "translate-x-full"
-            }`}
-          >
-            <div className="p-8 flex flex-col gap-6">
-              <h3 className="text-2xl font-display uppercase tracking-wider mb-4 text-clubRed">
-                Upcoming Fixtures
-              </h3>
-              {upcomingFixtures.map((fixture, i) => (
-                <div
-                  key={i}
-                  className="border-b border-zinc-700 pb-4 transition-transform transform hover:scale-105 hover:shadow-lg"
-                >
-                  <p className="text-lg font-bold">{fixture.opponent}</p>
-                  <p className="text-gray-400 text-sm">{fixture.date} • {fixture.time}</p>
-                </div>
-              ))}
+              <p className="text-3xl md:text-4xl font-bold text-clubRed animate-pulseSlow">
+                {item.value}
+              </p>
+              <p className="text-xs uppercase tracking-widest text-gray-400 mt-1">
+                {item.label}
+              </p>
             </div>
-          </div>
+          ))}
         </div>
-      </section>
+      ) : (
+        <p className="mt-6 text-clubRed text-lg font-bold animate-pulse">
+          Matchday Is Here!
+        </p>
+      )}
+
+      {/* FIXTURES DROPDOWN */}
+      <div
+        className={`transition-all duration-500 overflow-hidden ${
+          showFixtures ? "max-h-[500px] mt-8 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="bg-black/70 backdrop-blur-md p-6 rounded-2xl border border-zinc-800 space-y-4">
+          {[
+            "Bulldogs vs Red Berets FC",
+            "Bulldogs vs Gatuanyaga FC",
+            "Bulldogs vs Butterfly FC",
+            "Bulldogs vs TBC",
+            "Bulldogs vs TBC",
+          ].map((fixture, index) => (
+            <div
+              key={index}
+              className="flex justify-between border-b border-zinc-800 pb-2 text-gray-300"
+            >
+              <span>{fixture}</span>
+              <span>3:00 PM</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* RIGHT SIDE – MATCHDAY IMAGE */}
+    <div className="relative">
+      <img
+        src={hero6}
+        alt="Matchday"
+        className="rounded-2xl shadow-2xl object-cover w-full h-[450px]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent rounded-2xl"></div>
+    </div>
+
+  </div>
+</section>
+     
 
       {/* ================= TEAM INFO SECTION ================= */}
       <section className="bg-zinc-950 py-24 px-6 border-t border-zinc-800">
