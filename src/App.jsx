@@ -378,31 +378,42 @@ export default function App() {
         </div>
       </section>
 
-      {/* ================= SOCIAL MEDIA / FAN ENGAGEMENT ================= */}
-<section className="bg-black py-24 px-6 text-center">
-  <div className="max-w-6xl mx-auto">
-    <h2 className="text-4xl md:text-5xl font-display uppercase tracking-widest mb-6">
-      Join Our <span className="text-clubRed">Community</span>
+      {/* ================= JOIN OUR COMMUNITY ================= */}
+<section className="relative py-28 px-6 bg-black overflow-hidden">
+  {/* Background Glow */}
+  <div className="absolute inset-0 bg-gradient-to-r from-clubRed/20 via-transparent to-clubRed/20 blur-3xl opacity-40"></div>
+
+  <div className="relative max-w-5xl mx-auto text-center">
+    <h2 className="text-5xl md:text-6xl font-display uppercase tracking-tight mb-6">
+      Join The <span className="text-clubRed">Bulldogs</span> Community
     </h2>
-    <p className="text-gray-400 mb-10 text-lg md:text-xl">
-      Follow 44 Bulldogs FC on social media and stay updated with the latest news, match highlights, and behind-the-scenes moments.
+
+    <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed mb-12">
+      Stay connected with 44 Bulldogs FC. Get match updates, exclusive
+      behind-the-scenes content, and be part of our journey as we rise through
+      the ranks.
     </p>
 
-    <div className="flex justify-center gap-8 flex-wrap">
-      <a href="#" className="text-white hover:text-clubRed text-3xl transition-colors">
-        <i className="fab fa-facebook-f"></i>
+    <div className="flex flex-wrap justify-center gap-6">
+      <a
+        href="#"
+        className="bg-clubRed px-10 py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-blueHover transition-all transform hover:scale-105 shadow-lg"
+      >
+        Join WhatsApp
       </a>
-      <a href="#" className="text-white hover:text-clubRed text-3xl transition-colors">
-        <i className="fab fa-twitter"></i>
+
+      <a
+        href="#"
+        className="border-2 border-white px-10 py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all transform hover:scale-105"
+      >
+        Follow On Instagram
       </a>
-      <a href="#" className="text-white hover:text-clubRed text-3xl transition-colors">
-        <i className="fab fa-instagram"></i>
-      </a>
-      <a href="#" className="text-white hover:text-clubRed text-3xl transition-colors">
-        <i className="fab fa-youtube"></i>
-      </a>
-      <a href="#" className="text-white hover:text-clubRed text-3xl transition-colors">
-        <i className="fab fa-tiktok"></i>
+
+      <a
+        href="#"
+        className="border-2 border-gray-700 px-10 py-4 rounded-xl font-bold uppercase tracking-widest hover:border-clubRed transition-all transform hover:scale-105"
+      >
+        Contact Us
       </a>
     </div>
   </div>
